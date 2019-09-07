@@ -47,6 +47,7 @@ class skipgram(nn.Module):
         embeds = self.u_embeddings.weight.data
         fo = open(file_name, 'w')
         for idx in range(len(embeds)):
-            word = id2word(idx)
-            embed = ' '.join(embeds[idx])
-            fo.write(word+' '+embed+'\n')
+            if idx in id2word:
+                word = id2word[idx]
+                embed = ' '.join([ str(round(x,5)) for x in embeds[idx].cpu().numpy().tolist()])
+                fo.write(word+' '+embed+'\n')
