@@ -19,7 +19,7 @@ from model import skipgram
 
 
 class word2vec:
-    def __init__(self, inputfile, vocabulary_size=100000, embedding_dim=20, epoch_num=1, batch_size=1,
+    def __init__(self, inputfile, vocabulary_size=100000, embedding_dim=20, epoch_num=10, batch_size=16,
                  windows_size=5, neg_sample_num=10):
         self.op = Options(inputfile, vocabulary_size)
         self.embedding_dim = embedding_dim
