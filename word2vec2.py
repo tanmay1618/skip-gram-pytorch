@@ -20,7 +20,7 @@ from model import skipgram
 
 
 class word2vec:
-  def __init__(self, inputfile, vocabulary_size=100000, embedding_dim=200, epoch_num=10, batch_size=16, windows_size=5,neg_sample_num=10):
+  def __init__(self, inputfile, vocabulary_size=100000, embedding_dim=20, epoch_num=1, batch_size=1, windows_size=5,neg_sample_num=10):
     self.op = Options(inputfile, vocabulary_size)
     self.embedding_dim = embedding_dim
     self.windows_size = windows_size
@@ -70,7 +70,7 @@ class word2vec:
           word_embeddings = model.input_embeddings()
           sp1, sp2 = scorefunction(word_embeddings)     
           print('eporch,batch=%2d %5d: sp=%1.3f %1.3f  pair/sec = %4.2f loss=%4.3f\r'\
-           %(epoch, batch_num, sp1, sp2, (batch_num-batch_new)*self.batch_size/(end-start),loss.data[0]),end="")
+           %(epoch, batch_num, sp1, sp2, (batch_num-batch_new)*self.batch_size/(end-start),loss.data),end="")
           batch_new = batch_num
           start = time.time()
         batch_num = batch_num + 1 
@@ -79,7 +79,7 @@ class word2vec:
 
   
 if __name__ == '__main__':
-  wc= word2vec('text8')
+  wc= word2vec('./hin_newscrawl_2017_10K/hin_newscrawl_2017_10K-sentences.txt')
   wc.train()
 
 
