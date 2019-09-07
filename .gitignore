@@ -1,4 +1,5 @@
 hin_newscrawl_2017_10K/
 *.tar.gz
 tmp/
+*.txt
 __pycache__/
