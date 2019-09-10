@@ -3,6 +3,8 @@ import sys
 import json, csv
 from scipy.stats import spearmanr
 import math
+from sklearn import cluster
+from sklearn import metrics
 
 class Embedding():
     def __init__(self,filename):
@@ -41,8 +43,44 @@ class Embedding():
         print("Done.",len(model)," words loaded!")
         return model
 
+    def clusters(self,N):
+        y = list(self.model.keys())
+        X = list(self.model.values())[1:100]
+        kmeans = cluster.KMeans(n_clusters=N)
+        kmeans.fit(X)
+
+        labels = kmeans.labels_
+        centroids = kmeans.cluster_centers_
+    
+        centroids_closest = {}
+        for index,x in enumerate(X):
+            label = labels[index]
+            centroid = centroids[label]
+            dist = self.cosine_similarity(x,centroid)
+            if label in centroids_closest:
+                if centroids_closest[label]['dist'] > dist:
+                    centroids_closest[label]['dist'] = dist
+                    centroids_closest[label]['index'] = index
+            else:
+                centroids_closest[label] = {}
+                centroids_closest[label]['dist'] = dist
+                centroids_closest[label]['index'] = index
+        
+
+
+
+        import pdb;pdb.set_trace();
+        print ("Cluster id labels for inputted data")
+        print (labels)
+        print ("Centroids data")
+        for key,value in centroids_closest.items():
+            print(key,y[value['index']])
+        #print (centroids)
+
 
 if __name__ == "__main__":
-    word = sys.argv[1]
+    #word = sys.argv[1]
     model = Embedding("embedding.txt")
-    print(model.sorted_by_similarity(word))
+    #print(model.sorted_by_similarity(word))
+    N = 5
+    model.clusters(N)
