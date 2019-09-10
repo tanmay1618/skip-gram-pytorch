@@ -61,20 +61,18 @@ class Embedding():
                 if centroids_closest[label]['dist'] > dist:
                     centroids_closest[label]['dist'] = dist
                     centroids_closest[label]['index'] = index
+                    centroids_closest[label]['points'].append(index)
             else:
                 centroids_closest[label] = {}
                 centroids_closest[label]['dist'] = dist
                 centroids_closest[label]['index'] = index
-        
+                centroids_closest[label]['points'] = [index]
 
-
-
-        import pdb;pdb.set_trace();
         print ("Cluster id labels for inputted data")
         print (labels)
         print ("Centroids data")
         for key,value in centroids_closest.items():
-            print(key,y[value['index']])
+            print(key,y[value['index']],[y[index] for index in value['points'][0:5]])
         #print (centroids)
 
 
