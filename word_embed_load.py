@@ -45,7 +45,7 @@ class Embedding():
 
     def clusters(self,N):
         y = list(self.model.keys())
-        X = list(self.model.values())[1:100]
+        X = list(self.model.values())
         kmeans = cluster.KMeans(n_clusters=N)
         kmeans.fit(X)
 
@@ -77,8 +77,10 @@ class Embedding():
 
 
 if __name__ == "__main__":
-    #word = sys.argv[1]
+    word = sys.argv[2]
     model = Embedding("embedding.txt")
-    #print(model.sorted_by_similarity(word))
-    N = 5
-    model.clusters(N)
+    if sys.argv[1] == "similar":
+        print(model.sorted_by_similarity(word))
+    elif sys.argv[1] == "cluster":
+        N = int(word)
+        model.clusters(N)
