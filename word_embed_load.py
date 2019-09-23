@@ -27,9 +27,9 @@ class Embedding():
             base_vector = model[word]
         else:
             return None
-        words_with_distance = [(self.cosine_similarity(base_vector, model[w]),w) for w in model][0:10]
+        words_with_distance = [(self.cosine_similarity(base_vector, model[w]),w) for w in model]
         # We want cosine similarity to be as large as possible (close to 1)
-        return sorted(words_with_distance, key=lambda t: t[0], reverse=True)
+        return sorted(words_with_distance, key=lambda t: t[0], reverse=True)[0:10]
 
 
     def load_embeddings(self,filename):
